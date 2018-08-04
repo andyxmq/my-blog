@@ -120,5 +120,33 @@ react  mobx
     在script新增 "build": "webpack --config build/webpack.config.js" 
 
 
+    4.webpack loader的基础应用
+
+        安装jsx loader: npm i babel-loader babel-core -D
+```js
+    //  修改webpack配置
+    module: {
+        rules: [
+            {
+                test: /\.(js|jsx)$/,
+                exclude: /(node_modules|bower_components)/,
+                loader: 'babel-loader'
+            }
+        ]
+    }
+```
+**notes:** babel默认直接编译es6代码 不能支持jsx语法,解决办法：根目录新增配文
+    件.babelrc
+```js
+{
+    "presets": [ // 代表babel支持的语法 
+      ["es2015", {"loose": true}],
+      "react"   
+    ]
+}
+```
+    安装html-webpack-plugin用于生产html文件 npm i html-webpack-plugin -D
+
+
 
 

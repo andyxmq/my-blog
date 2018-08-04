@@ -23,9 +23,16 @@
   },
   "homepage": "https://github.com/andyxmq/my-blog#readme",
   "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-es2015-loose": "^8.0.0",
+    "babel-preset-react": "^6.24.1",
+    "html-webpack-plugin": "^3.2.0",
     "webpack": "^3.10.0"
   },
   "dependencies": {
-    "react": "^16.4.2"
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2"
   }
 }
