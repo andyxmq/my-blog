@@ -53,7 +53,7 @@ react  mobx
 
 ## WebApp架构简介
 
-> 工程架构 "'Operator Mono SSm A','Operator Mono SSm B',monospace",
+> 工程架构 
 
     1.解放生成力(聚焦业务代码，解决重复的工作(文件复杂、刷新浏览器、重启服务))
 
@@ -92,6 +92,33 @@ react  mobx
         合并资源文件，减少HTTP请求
         压缩资源文件减少请求大小
         合理利用缓存机制、尽可能使用缓存减少请求
+
+
+> 工程架构的核心：webpack配置（模块打包器）通过loader打包所有资源（js、css、图片、字体）
+
+    1.创建npm项目: npm init
+    
+    2.安装webpack react
+
+    3.新建build文件夹：webpack配置文件 脚本文件等  client: 前端应用文件 
+
+        在build中创建webpack.config.js：
+```js
+    const path = require('path') // 解决不同环境之间路径引用问题
+
+    module.exports = {
+        entry: {
+            app: path.join(__dirname, '../client/app.js')
+        },
+        output: {
+            filename: '[name].[hash].js',
+            path: path.join(__dirname, '../dist'),
+            publicPath: '/public' // 静态资源引用路径 区分静态资源
+        }
+    }
+```
+    在script新增 "build": "webpack --config build/webpack.config.js" 
+
 
 
 
