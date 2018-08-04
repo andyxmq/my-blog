@@ -13,18 +13,33 @@ react  mobx
 
     1.多页应用的特征:
     
-        所有内容都由服务端用模板生成java .net php
+        所有内容都由服务端用模板生成（java .net php）
         每次页面跳转都需要经过服务端
         js更多是做做动画
 
         常用类库：jQuery、mootools、YUI、
 
         架构工具：无特定前端框架，跟后端配合
-            grunt、glup
-            模块化工具： 无  
-            seajs(CMD) requirejs(AMD)
+            grunt、glup(后来)
+        模块化工具： 无特定的框架  
+            seajs(CMD) requirejs(AMD) commonJs(主流)
         静态文件处理：
             使用grunt、glup等工具手动编译到html中、自由度低操作复杂。或者甚至不处理，交给后端让后端处理
             
     
     2.单页应用特征：
+
+        所有的内容都是在前端生成
+        JS承担更多的业务逻辑，后端只提供数据API
+        页面路由跳转不需要经过后端
+
+        常用类库：React Vue Angular Backbone.js
+
+        架构工具：npm bower jspm
+
+        模块化工具：webpack rollup browserify
+
+        静态文件：
+            可以直接在js代码中进行引用，并且交由模块化工具转化成线上可用的静态资源，并且可以定制转化过程适应不同的
+            需求场景
+
