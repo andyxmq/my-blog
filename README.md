@@ -192,6 +192,14 @@ react  mobx
 ```         
             appString 插入html页面：新建template.html,fs读取静态文件
 
+> 项目开发时的常用配置
+
+    1. 常用配置
+
+        webpack dev server
+
+        Hot module replacement(无刷新)
+
 
 
 
