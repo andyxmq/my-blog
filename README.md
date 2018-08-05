@@ -147,6 +147,53 @@ react  mobx
 ```
     安装html-webpack-plugin用于生产html文件 npm i html-webpack-plugin -D
 
+```js
+    plugins: [
+        new HtmlWebpackPlugin()
+    ]
+```
+
+    5. 服务端渲染
+
+        1).存在的原因：由于单页应用存在的问题（SEO不友好、首次请求等待时间较长，体验不友好）
+        2).使用react-dom/server进行服务端渲染:
+
+            a：创建server-entry.js 目的export 服务端要渲染内容
+
+            b：创建服务端webpack配置
+
+            c：修改package中的script 安装rimraf包
+
+```js
+        "scripts": {
+            "build:client": "webpack --config build/webpack.config.client.js",
+            "build:server": "webpack --config build/webpack.config.server.js",
+            "clear": "rimraf dist",
+            "build": "npm run clear && npm run build:client && npm run build:server"
+        }
+```
+            d：创建server 服务，安装express: npm i express -S
+
+```js
+        const express = require('express')
+        var ReactDOMServer = require('react-dom/server')
+        const serverEntry = require('../dist/server-entry').default
+
+        const app = express()
+
+        app.get('*', function(req,res){
+            const appString = ReactDOMServer.renderToString(serverEntry)
+            res.send(appString)
+        })
+
+        app.listen(3333, function(){
+            console.log('server is listening on 3333')
+        })
+```         
+            appString 插入html页面：新建template.html,fs读取静态文件
+
+
+
 
 
 
