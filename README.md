@@ -196,7 +196,33 @@ react  mobx
 
     1. 常用配置
 
-        webpack dev server
+        webpack dev server：修改webpack配置文件，判断当前是否为开发模式
+```js
+        const isDev = process.env.NODE_ENV === 'development'
+        
+        // webpack.config.client.js
+        if(isDev){ // 删掉dist目录
+            config.devServer = {
+                host:  '0.0.0.0' ,//  可以使用任何方式访问IP localhost 127.0.0.1
+                port:  '8888',
+                contentBase: path.join(__dirname, '../dist'), //  webpack处理的静态文件
+                hot: true, // 启动hot module replacement
+                overlay: { // 出现错误在网页显示黑色的错误
+                    errors: true
+                },
+                publicPath: '/public', // 解决静态文件无法访问，与output中publicPath 保持一致
+                historyApiFallback: { // 解决错误路径
+                    index: '/public/index.html'
+                }
+            }
+        }
+
+        //package.json  其中：cross-env解决win linux mac环境不同
+         "dev:client": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.config.client.js",  
+```
+
+**note:** webpack-dev-server 先检查本地目录 
+
 
         Hot module replacement(无刷新)
 
