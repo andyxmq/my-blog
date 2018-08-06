@@ -221,11 +221,63 @@ react  mobx
          "dev:client": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.config.client.js",  
 ```
 
-**note:** webpack-dev-server 先检查本地目录 
+**note:** webpack-dev-server 先检查本地目录  2.9.7
 
 
-        Hot module replacement(无刷新)
+        Hot module replacement(无刷新),配置如下：
 
+            1)：npm install --save-dev react-hot-loader,修改.babelrc
+```js
+            "plugins": [
+                "react-hot-loader/babel"
+            ]
+
+            //app.js
+            import ReactDOM from 'react-dom'
+            import React from 'react'
+            import { AppContainer } from 'react-hot-loader'
+            import App from './App1.jsx'
+
+            const root = document.getElementById('root')
+            const render = Component => {
+                ReactDOM.hydrate(
+                <AppContainer>
+                    <Component />
+                </AppContainer>,
+                root
+                )
+            }
+            render(App)
+            if (module.hot) {
+                module.hot.accept('./App1.jsx',() => {
+                    const NextApp = require("./App1.jsx").default
+                    // in all other cases - re-require App manually
+                    render(NextApp)
+                })
+            }
+
+            // webpack配置文件
+            config.entry = {
+                app: [
+                    'react-hot-loader/patch',
+                    path.join(__dirname,'../client/app.js')
+                ]
+            };
+            config.devServer = {
+                host:  '0.0.0.0' ,//  可以使用任何方式访问IP localhost 127.0.0.1
+                port:  '8888',
+                contentBase: path.join(__dirname, '../dist'), //  webpack处理的静态文件
+                hot: true, // 启动hot module replacement
+                overlay: { // 出现错误在网页显示黑色的错误
+                    errors: true
+                },
+                publicPath: '/public', // 解决静态文件无法访问，与output中publicPath 保持一致
+                historyApiFallback: { // 解决错误路径
+                    index: '/public/index.html'
+                }
+            }
+            config.plugins.push(new webpack.HotModuleReplacementPlugin());
+```
 
 
 

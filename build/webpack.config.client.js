@@ -1,5 +1,7 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const webpack = require('webpack')
+
 const isDev = process.env.NODE_ENV === 'development'
 const config = {
     entry: {
@@ -27,11 +29,17 @@ const config = {
 }
 
 if(isDev){
+    config.entry = {
+        app: [
+            'react-hot-loader/patch',
+            path.join(__dirname,'../client/app.js')
+        ]
+    };
     config.devServer = {
         host:  '0.0.0.0' ,//  可以使用任何方式访问IP localhost 127.0.0.1
         port:  '8888',
         contentBase: path.join(__dirname, '../dist'), //  webpack处理的静态文件
-        // hot: true, // 启动hot module replacement
+        hot: true, // 启动hot module replacement
         overlay: { // 出现错误在网页显示黑色的错误
             errors: true
         },
@@ -40,5 +48,6 @@ if(isDev){
             index: '/public/index.html'
         }
     }
+    config.plugins.push(new webpack.HotModuleReplacementPlugin());
 }
 module.exports = config

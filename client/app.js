@@ -1,5 +1,22 @@
 import ReactDOM from 'react-dom'
 import React from 'react'
+import { AppContainer } from 'react-hot-loader'
 import App from './App1.jsx'
 
-ReactDOM.hydrate(<App />,  document.getElementById("root"))
+const root = document.getElementById('root')
+const render = Component => {
+    ReactDOM.hydrate(
+      <AppContainer>
+        <Component />
+      </AppContainer>,
+      root
+    )
+}
+render(App)
+if (module.hot) {
+    module.hot.accept('./App1.jsx',() => {
+        const NextApp = require("./App1.jsx").default
+        // in all other cases - re-require App manually
+        render(NextApp)
+    })
+}
