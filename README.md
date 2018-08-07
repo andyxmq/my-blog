@@ -226,58 +226,135 @@ react  mobx
 
         Hot module replacement(无刷新),配置如下：
 
-            1)：npm install --save-dev react-hot-loader,修改.babelrc
+        1)：npm install --save-dev react-hot-loader,修改.babelrc
 ```js
-            "plugins": [
-                "react-hot-loader/babel"
+        "plugins": [
+            "react-hot-loader/babel"
+        ]
+
+        //app.js
+        import ReactDOM from 'react-dom'
+        import React from 'react'
+        import { AppContainer } from 'react-hot-loader'
+        import App from './App1.jsx'
+
+        const root = document.getElementById('root')
+        const render = Component => {
+            ReactDOM.hydrate(
+            <AppContainer>
+                <Component />
+            </AppContainer>,
+            root
+            )
+        }
+        render(App)
+        if (module.hot) {
+            module.hot.accept('./App1.jsx',() => {
+                const NextApp = require("./App1.jsx").default
+                // in all other cases - re-require App manually
+                render(NextApp)
+            })
+        }
+
+        // webpack配置文件
+        config.entry = {
+            app: [
+                'react-hot-loader/patch',
+                path.join(__dirname,'../client/app.js')
             ]
-
-            //app.js
-            import ReactDOM from 'react-dom'
-            import React from 'react'
-            import { AppContainer } from 'react-hot-loader'
-            import App from './App1.jsx'
-
-            const root = document.getElementById('root')
-            const render = Component => {
-                ReactDOM.hydrate(
-                <AppContainer>
-                    <Component />
-                </AppContainer>,
-                root
-                )
+        };
+        config.devServer = {
+            host:  '0.0.0.0' ,//  可以使用任何方式访问IP localhost 127.0.0.1
+            port:  '8888',
+            contentBase: path.join(__dirname, '../dist'), //  webpack处理的静态文件
+            hot: true, // 启动hot module replacement
+            overlay: { // 出现错误在网页显示黑色的错误
+                errors: true
+            },
+            publicPath: '/public', // 解决静态文件无法访问，与output中publicPath 保持一致
+            historyApiFallback: { // 解决错误路径
+                index: '/public/index.html'
             }
-            render(App)
-            if (module.hot) {
-                module.hot.accept('./App1.jsx',() => {
-                    const NextApp = require("./App1.jsx").default
-                    // in all other cases - re-require App manually
-                    render(NextApp)
-                })
-            }
-
-            // webpack配置文件
-            config.entry = {
-                app: [
-                    'react-hot-loader/patch',
-                    path.join(__dirname,'../client/app.js')
-                ]
-            };
-            config.devServer = {
-                host:  '0.0.0.0' ,//  可以使用任何方式访问IP localhost 127.0.0.1
-                port:  '8888',
-                contentBase: path.join(__dirname, '../dist'), //  webpack处理的静态文件
-                hot: true, // 启动hot module replacement
-                overlay: { // 出现错误在网页显示黑色的错误
-                    errors: true
-                },
-                publicPath: '/public', // 解决静态文件无法访问，与output中publicPath 保持一致
-                historyApiFallback: { // 解决错误路径
-                    index: '/public/index.html'
-                }
-            }
-            config.plugins.push(new webpack.HotModuleReplacementPlugin());
+        }
+        config.plugins.push(new webpack.HotModuleReplacementPlugin());
 ```
+
+> 开发时的服务端渲染 
+
+    1. 修改server.js 新增const isDev = process.env.NODE_ENV === 'development'
+```js
+    const devStatic = require("./utils/dev-static")
+    devStatic(app);
+```
+
+    2. 新建utils dev-static  
+    
+    1)：安装axios，获取模板文件  npm i axios -S 
+
+    2): 获取template.html
+```js
+    const getTemplate = () => {
+        return new Promise( (resolve,reject)=> {
+            axios.get("http://localhost:8888/public/index.html")
+            .then(response=>resolve(response))
+            .catch(reject)
+        })
+    }
+```
+      : 获取server bundle，下载memory-fs -D,修改outputFileSystem
+
+```js
+    //创建
+    const fs = new MemoryFs();
+    // 获取server端的bunlder 
+    const webpack = require("webpack"); 
+    const serverConfig = require("../../build/webpack.config.server");
+
+    const serverCompiler = webpack(serverConfig); //启动webpack compiler，可以监听entry下面的文件 
+    serverCompiler.outputFileSystem = fs
+
+    const Module = module.constructor; // module 的构造方法
+
+    let serverBundle  //最终要
+    serverCompiler.watch({},(err,stats)=>{
+        if(err) throw err
+        stats = stats.toJson();
+        stats.errors.forEach(error=>console.log(error))
+        stats.warnings.forEach(warning=>console.warn(warning))
+
+        // 获取bunldpath
+        const bundlePath = path.join(
+            serverConfig.output.path,
+            serverConfig.output.filename
+        );
+
+        //安装memory-fs
+        const bundle = fs.readFileSync(bundlePath,'utf-8') //读取出来是string 需要传入指定的编码格式
+
+        //解决bundle为string的问题
+        const m = new Module()
+        m._compile(bundle,'server-entry.js') //注意指定文件名
+        serverBundle = m.default
+    })
+```
+    : 处理静态文件 下载http-proxy-middleware -D
+```js
+    app.use("/public",proxy({target: 'http://localhost:8888'}));
+```
+
+> 使用eslint和editorconfig规范代码
+
+    1.作用：
+      规范代码有利于团队协作
+      纯手工费时费力不能保证其准确性
+
+    2.git commit时，使用git hook调用eslint进行代码验证
+
+
+    3.editorConfig：统一文本编辑器之间的一些规范,EditorConfig每一个编辑器的插件
+
+    4.开始使用： 
+        安装eslint : npm i eslint -D, 新建.babelrc
 
 
 
