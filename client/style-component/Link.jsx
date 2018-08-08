@@ -16,10 +16,10 @@ class Link extends React.Component {
   render() {
     return [
       <BasicLink key="basicLink">
-        Unstyled, boring Link
+        Unstyled, boring Link从asdasd
       </BasicLink>,
       <StyledLink key="styleLink">
-        Styled, exciting Link
+        Styled, exciting Link asdas
       </StyledLink>,
     ];
   }

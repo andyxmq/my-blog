@@ -389,8 +389,33 @@ react  mobx
 ```
     5. 编译后在提交代码
       安装husky
+```js
+    "eslint": "eslint --ext .js --ext .jsx client/",
+    "precommit": "npm run eslint"
+```
 
+> 工程优化
 
+  1.webpack配置文件优化
+    webpack-merge
+  2.处理favico
+    安装 serve-favicon
+    app.use(favicon(path.join(__dirname, '../favicon.ico')))
+  3.处理服务重复重启问题
+    安装nodemon npm i nodemon -D
+    跟目录创建nodemon.json
+```js
+  {
+    "verbose": true, // 详细错误的信息
+    "ignore": [
+      "git",
+      "node_modules/**/node_modules",
+      "eslintrc",
+      "client",
+      "build"
+    ]
+  }
+```
 
 
 

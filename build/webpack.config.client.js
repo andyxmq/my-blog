@@ -1,40 +1,23 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const webpack = require('webpack')
+const baseConfig = require('./webpack.base')
+const webpackMerge = require('webpack-merge')
 
 const isDev = process.env.NODE_ENV === 'development'
-const config = {
+const config = webpackMerge(baseConfig, {
   entry: {
     app: path.join(__dirname, '../client/app.js')
   },
   output: {
-    filename: '[name].[hash].js',
-    path: path.join(__dirname, '../dist'),
-    publicPath: '/public' // 静态资源引用路径 区分静态资源
-  },
-  module: {
-    rules: [
-      {
-        enforce: 'pre',
-        test: /\.(js|jsx)$/,
-        loader: 'eslint-loader',
-        exclude: [
-          path.resolve(__dirname, '../node_modules')
-        ]
-      },
-      {
-        test: /\.(js|jsx)$/,
-        exclude: /(node_modules|bower_components)/,
-        loader: 'babel-loader'
-      }
-    ]
+    filename: '[name].[hash].js'
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, '../client/template.html')
     })
   ]
-}
+})
 
 if (isDev) {
   config.entry = {
