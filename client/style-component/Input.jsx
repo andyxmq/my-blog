@@ -1,5 +1,5 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 
 const StyleInput = styled.input`
   padding: 0.5em;
@@ -8,14 +8,11 @@ const StyleInput = styled.input`
   background: papayawhip;
   border: none;
   border-radius: 3px;
-` 
+`;
 
-class Input extends React.Component{
-  render(){
-    return <div>
-      <StyleInput placeholder="@aa" type="text" />
-      <StyleInput placeholder="@geelen" type="text" />
-    </div>
-  }
-}
-export default Input;
+export default () => (
+  <div>
+    <StyleInput placeholder="@aa" type="text" />
+    <StyleInput placeholder="@geelen" type="text" />
+  </div>
+);

@@ -1,5 +1,5 @@
-import React from 'react'
-import styled, { keyframes } from 'styled-components'
+import React from 'react';
+import styled, { keyframes } from 'styled-components';
 
 const rotate360 = keyframes`
   from {
@@ -18,10 +18,10 @@ const StyleRotate = styled.div`
   font-size: 1.2rem;
 `;
 
-class Rotate extends React.Component{
-  render(){
-    return <StyleRotate>&lt; 💅 &gt;</StyleRotate>
-  }
-}
-
-export default Rotate;
+export default () => (
+  <StyleRotate>
+    <span>
+      &lt; 💅 &gt;
+    </span>
+  </StyleRotate>
+);

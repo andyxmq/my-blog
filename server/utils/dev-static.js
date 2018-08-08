@@ -41,7 +41,7 @@ serverCompiler.watch({},(err,stats)=>{
 
     //解决bundle为string的问题
     const m = new Module()
-    m._compile(bundle,"server-entry.js") //注意指定文件名
+    m._compile(bundle, "server-entry.js") //注意指定文件名
     serverBundle = m.default
 })
 

@@ -1,39 +1,47 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 
-const StyledCounter = styled.div`/* ... */`
-const Paragraph = styled.p`/* ... */`
-const Button = styled.button`/* ... */`
-class Counter extends React.Component{
-  constructor(props){
-    super(props)
+const StyledCounter = styled.div`/* ... */`;
+const Paragraph = styled.p`/* ... */`;
+const Button = styled.button`/* ... */`;
+class Counter extends React.Component {
+  constructor(props) {
+    super(props);
     this.state = {
-      count: 0
-    }
+      count: 0,
+    };
   }
 
   increment() {
-    let {count} = this.state;
+    let { count } = this.state;
+    let newCount = count + 1;
     this.setState({
-      count: ++count
-    })
+      count: newCount,
+    });
   }
 
   decrement() {
-    let {count} = this.state;
+    let { count } = this.state;
+    let newCount = count - 1;
     this.setState({
-      count: --count,
-    })
+      count: newCount,
+    });
   }
 
-  render(){
+  render() {
     return (
       <StyledCounter>
-        <Paragraph>{ this.state.count }</Paragraph>
-        <Button onClick={()=>this.increment()}>+</Button>
-        <Button onClick={()=>this.decrement()}>-</Button>
+        <Paragraph>
+          { this.state.count }
+        </Paragraph>
+        <Button onClick={() => this.increment()}>
+          +
+        </Button>
+        <Button onClick={() => this.decrement()}>
+          -
+        </Button>
       </StyledCounter>
-    )
+    );
   }
 }
 

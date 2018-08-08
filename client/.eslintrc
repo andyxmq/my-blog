@@ -1,0 +1,24 @@
+{
+    "parser": "babel-eslint",
+    "extends": "airbnb",
+    "env": {
+        "browser": true,
+        "node": true,
+        "es6": true
+    },
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module"
+    },
+    "rules": {
+        "react/destructuring-assignment": [0],
+        "import/extensions": [0],
+        "jsx-a11y/anchor-is-valid": [0],
+        "import/no-extraneous-dependencies": [0],
+        "react/jsx-filename-extension": [0],
+        "react/prop-types": [0],
+        "jsx-a11y/accessible-emoji": [0],
+        "prefer-const": [0]
+
+    }
+}

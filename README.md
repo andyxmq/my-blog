@@ -1,5 +1,5 @@
 # my-blog
-react  mobx 
+react  mobx
 
 ## 前端技术选型
 
@@ -12,7 +12,7 @@ react  mobx
     分两大类：单页应用、多页应用（传统网站）
 
     1.多页应用的特征:
-    
+
         所有内容都由服务端用模板生成（java .net php）
         每次页面跳转都需要经过服务端
         js更多是做做动画
@@ -21,12 +21,12 @@ react  mobx
 
         架构工具：无特定前端框架，跟后端配合
             grunt、glup(后来)
-        模块化工具： 无特定的框架  
+        模块化工具： 无特定的框架
             seajs(CMD) requirejs(AMD) commonJs(主流)
         静态文件处理：
             使用grunt、glup等工具手动编译到html中、自由度低操作复杂。或者甚至不处理，交给后端让后端处理
-            
-    
+
+
     2.单页应用特征：
 
         所有的内容都是在前端生成
@@ -44,7 +44,7 @@ react  mobx
             需求场景
 
 > 其他考虑因素
-    
+
     浏览器兼容性（必须在指定浏览器访问）
 
     toB(浏览器兼容要求比较低、交互要求比较低、功能复杂度高，选择一些框架)还是toC(性能要求高，功能复杂度低)
@@ -53,7 +53,7 @@ react  mobx
 
 ## WebApp架构简介
 
-> 工程架构 
+> 工程架构
 
     1.解放生成力(聚焦业务代码，解决重复的工作(文件复杂、刷新浏览器、重启服务))
 
@@ -67,7 +67,7 @@ react  mobx
         预期可能出现的问题并规避
 
     3.保证项目质量（排错、提高效率）
-        
+
         code lint
         不同环境排除差异（如break lines）
         EditorConfig 统一编辑器
@@ -84,7 +84,7 @@ react  mobx
 
     数据解决方案：flux
 
-    整体的代码风格: 
+    整体的代码风格:
 
 > web开发常用的网络优化
 
@@ -97,10 +97,10 @@ react  mobx
 > 工程架构的核心：webpack配置（模块打包器）通过loader打包所有资源（js、css、图片、字体）
 
     1.创建npm项目: npm init
-    
+
     2.安装webpack react
 
-    3.新建build文件夹：webpack配置文件 脚本文件等  client: 前端应用文件 
+    3.新建build文件夹：webpack配置文件 脚本文件等  client: 前端应用文件
 
         在build中创建webpack.config.js：
 ```js
@@ -117,7 +117,7 @@ react  mobx
         }
     }
 ```
-    在script新增 "build": "webpack --config build/webpack.config.js" 
+    在script新增 "build": "webpack --config build/webpack.config.js"
 
 
     4.webpack loader的基础应用
@@ -139,9 +139,9 @@ react  mobx
     件.babelrc
 ```js
 {
-    "presets": [ // 代表babel支持的语法 
+    "presets": [ // 代表babel支持的语法
       ["es2015", {"loose": true}],
-      "react"   
+      "react"
     ]
 }
 ```
@@ -189,7 +189,7 @@ react  mobx
         app.listen(3333, function(){
             console.log('server is listening on 3333')
         })
-```         
+```
             appString 插入html页面：新建template.html,fs读取静态文件
 
 > 项目开发时的常用配置
@@ -199,7 +199,7 @@ react  mobx
         webpack dev server：修改webpack配置文件，判断当前是否为开发模式
 ```js
         const isDev = process.env.NODE_ENV === 'development'
-        
+
         // webpack.config.client.js
         if(isDev){ // 删掉dist目录
             config.devServer = {
@@ -218,7 +218,7 @@ react  mobx
         }
 
         //package.json  其中：cross-env解决win linux mac环境不同
-         "dev:client": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.config.client.js",  
+         "dev:client": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.config.client.js",
 ```
 
 **note:** webpack-dev-server 先检查本地目录  2.9.7
@@ -279,7 +279,7 @@ react  mobx
         config.plugins.push(new webpack.HotModuleReplacementPlugin());
 ```
 
-> 开发时的服务端渲染 
+> 开发时的服务端渲染
 
     1. 修改server.js 新增const isDev = process.env.NODE_ENV === 'development'
 ```js
@@ -287,9 +287,9 @@ react  mobx
     devStatic(app);
 ```
 
-    2. 新建utils dev-static  
-    
-    1)：安装axios，获取模板文件  npm i axios -S 
+    2. 新建utils dev-static
+
+    1)：安装axios，获取模板文件  npm i axios -S
 
     2): 获取template.html
 ```js
@@ -306,11 +306,11 @@ react  mobx
 ```js
     //创建
     const fs = new MemoryFs();
-    // 获取server端的bunlder 
-    const webpack = require("webpack"); 
+    // 获取server端的bunlder
+    const webpack = require("webpack");
     const serverConfig = require("../../build/webpack.config.server");
 
-    const serverCompiler = webpack(serverConfig); //启动webpack compiler，可以监听entry下面的文件 
+    const serverCompiler = webpack(serverConfig); //启动webpack compiler，可以监听entry下面的文件
     serverCompiler.outputFileSystem = fs
 
     const Module = module.constructor; // module 的构造方法
@@ -353,8 +353,43 @@ react  mobx
 
     3.editorConfig：统一文本编辑器之间的一些规范,EditorConfig每一个编辑器的插件
 
-    4.开始使用： 
+    4.开始使用：
         安装eslint : npm i eslint -D, 新建.babelrc
+        整个项目遵循根目录下的.eslintrc
+        安装 npm i babel-eslint eslint-config-airbnb eslint-config-standard eslint-loader eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-react eslint eslint-plugin-node eslint-plugin-standard eslint-plugin-promise -D
+        predependency:
+
+```js
+    {
+        "parser": "babel-eslint", // 指定的工具解析js代码
+        "extends": "airbnb",
+        "parserOptions": {
+          "ecmaVersion": 6,
+          "sourceType": "module"
+        },
+        "env": { // 执行环境
+            "browser": true,
+            "node": true,
+            "es6": true
+        },
+        "rules": {
+
+        }
+    }
+
+    // webpack 配置
+       {
+            enforce: "pre",
+            test: /\.(js|jsx)$/,
+            loader: "eslint-loader",
+            exclude: [
+                path.resolve(__dirname,"../node_modules")
+            ]
+        },
+```
+    5. 编译后在提交代码
+      安装husky
+
 
 
 
