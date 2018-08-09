@@ -1,6 +1,6 @@
 const path = require('path')
 const baseConfig = require('./webpack.base')
-const webpackMerge = require('webpack-merge')
+const webpackMerge = require('C:/Users/andy/AppData/Local/Microsoft/TypeScript/2.9/node_modules/@types/webpack-merge')
 
 module.exports = webpackMerge(baseConfig, {
   target: 'node', // 目标环境node
