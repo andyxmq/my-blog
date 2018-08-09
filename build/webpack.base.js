@@ -4,6 +4,9 @@ module.exports = {
     path: path.join(__dirname, '../dist'),
     publicPath: '/public/' // 静态资源引用路径 区分静态资源
   },
+  resolve: {
+    extensions: ['.js', '.jsx']
+  },
   module: {
     rules: [
       {

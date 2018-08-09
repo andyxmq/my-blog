@@ -1,9 +1,6 @@
 import React from 'react';
-import Counter from '../topic-list/Counter.jsx';
-import Input from '../style-component/Input.jsx';
-import Button from '../style-component/Button.jsx';
-import Link from '../style-component/Link.jsx';
-import Rotate from '../style-component/Rotate.jsx';
+import { Link } from 'react-router-dom';
+import Routes from '../config/router';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -16,15 +13,17 @@ export default class App extends React.Component {
   }
 
   render() {
-    return (
+    return [
       <div>
-        aaaaccc
-        <Counter />
-        <Input />
-        <Button />
-        <Link />
-        <Rotate />
-      </div>
-    );
+        <Link to="/">
+          首页
+        </Link>
+        <br />
+        <Link to="/detail">
+          详情页
+        </Link>
+      </div>,
+      <Routes />,
+    ];
   }
 }

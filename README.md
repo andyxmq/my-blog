@@ -429,4 +429,55 @@ react  mobx
 
   4.components: 存放非业务组件，或者在多个业务间都需要用到的功用组件
 
+> 路由配置
+
+    区分不同模块功能的地址，HTML5 API中的history能够让我们控制url调转之后不刷新页面，而是交给我们
+  JS代码进行相应的操作，在history出现之前，我们可以使用hash调转来实现
+
+  1. React中的路由
+
+    React-router是以一个非常好用的路由控制，能让我们想书写JSX组件一样控制路由调转
+
+    安装react-router(react-router-dom/react-router-native) -S, 因此react-router-dom
+
+```js
+  // router.js
+  import React from 'react';
+
+  import {
+    Route,
+  } from 'react-router-dom';
+
+  import TopicList from '../views/topic-list/index';
+  import TopicDetail from '../views/topic-detail/index';
+
+  export default () => [
+    <Route path="/" component={TopicList} />,
+    <Route path="/detail" component={TopicDetail} />,
+  ];
+
+  // App.jsx
+  render() {
+    return (
+      <div>
+        aaaaccc
+        <Counter />
+        <Route />
+      </div>
+    );
+  }
+
+  // app.js
+  const render = (Component) => {
+  ReactDOM.hydrate(
+      <AppContainer>
+        <BrowserRouter>
+          <Component />
+        </BrowserRouter>
+      </AppContainer>,
+      root,
+    );
+  };
+```
+
 
