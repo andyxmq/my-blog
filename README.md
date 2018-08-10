@@ -480,4 +480,26 @@ react  mobx
   };
 ```
 
+> store
 
+  数据存放的地方就叫做store,flux: 单项数据流
+
+  mobx: 让flux使用起来的更加简单，相比Redux有mutation、action、dispatch等概念
+  Mobx则更符合对一个store增删查改的操作概念
+
+  配置mobox: 新增stage-1 、transform-decorators-legacy
+  安装：babel-plugin-transform-decorators-legacy babel-preset-stage-1
+```js
+  {
+      "presets": [
+        ["es2015", {"loose": true}],
+        "stage-1",
+        "react"
+      ],
+      "plugins": [
+        "transform-decorators-legacy","react-hot-loader/babel"
+      ]
+  }
+
+```
+  安装 mobx mobx-react -S ; 安装prop-types -S
