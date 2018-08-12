@@ -66,6 +66,7 @@
     "ejs-compiled-loader": "^1.1.0",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
+    "material-ui": "^1.0.0-beta.47",
     "mobx": "^5.0.3",
     "mobx-react": "^5.2.3",
     "prop-types": "^15.6.2",

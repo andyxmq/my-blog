@@ -606,3 +606,10 @@ let serverBundle, createStoreMap // 最终要
 4. 解决html title: npm i react-helmet -S
 
 ## React16
+
+> 老版本相比：体积变小、react+react-dom在gzipped之后小了10k左右。其次整个代码都用Fiber重写了，最后更新了一堆非常有用的功能, 新特性：
+
+1. error boundary
+2. New render return types
+3. Portals
+

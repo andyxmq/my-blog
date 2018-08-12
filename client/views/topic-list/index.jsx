@@ -1,9 +1,10 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import PropTypes from 'prop-types';
-import { resolve } from 'uri-js';
 import Helmet from 'react-helmet';
+import Button from 'material-ui/Button';
 import AppState from '../../store/app-state';
+
 
 @inject('appState')
 @observer
@@ -19,7 +20,7 @@ export default class TopicList extends React.Component {
 
   bootstrapper() {
     let that = this;
-    return new Promise((resolve) => { // eslint-disable-line
+    return new Promise((resolve) => {
       setTimeout(() => {
         that.props.appState.count = 3;
         resolve(true);
@@ -41,6 +42,9 @@ export default class TopicList extends React.Component {
           </title>
           <meta name="discription" content="this is description" />
         </Helmet>
+        <Button raised="true" color="secondary">
+          this is a buttonaa
+        </Button>
         <input type="text" onChange={this.changeName} />
         <span>
           {this.props.appState.msg}
