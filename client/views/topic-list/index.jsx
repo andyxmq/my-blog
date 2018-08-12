@@ -1,7 +1,9 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import PropTypes from 'prop-types';
-import { Appstate } from '../../store/app-state';
+import { resolve } from 'uri-js';
+import Helmet from 'react-helmet';
+import AppState from '../../store/app-state';
 
 @inject('appState')
 @observer
@@ -15,6 +17,17 @@ export default class TopicList extends React.Component {
     // dosomething
   }
 
+  bootstrapper() {
+    let that = this;
+    return new Promise((resolve) => { // eslint-disable-line
+      setTimeout(() => {
+        that.props.appState.count = 3;
+        resolve(true);
+      }, 100);
+    });
+  }
+
+
   changeName(event) {
     this.props.appState.changeName(event.target.value);
   }
@@ -22,6 +35,12 @@ export default class TopicList extends React.Component {
   render() {
     return (
       <div>
+        <Helmet>
+          <title>
+            this is topic list
+          </title>
+          <meta name="discription" content="this is description" />
+        </Helmet>
         <input type="text" onChange={this.changeName} />
         <span>
           {this.props.appState.msg}
@@ -32,5 +51,5 @@ export default class TopicList extends React.Component {
 }
 
 TopicList.propTypes = {
-  appState: PropTypes.instanceOf(Appstate),
+  appState: PropTypes.instanceOf(new AppState()),
 };

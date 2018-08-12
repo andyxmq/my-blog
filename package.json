@@ -11,7 +11,8 @@
     "clear": "rimraf dist",
     "build": "npm run clear && npm run build:client && npm run build:server",
     "eslint": "eslint --ext .js --ext .jsx client/",
-    "precommit": "npm run eslint"
+    "precommit": "npm run eslint",
+    "start": "cross-env NODE_ENV=production node server/server.js"
   },
   "repository": {
     "type": "git",
@@ -38,7 +39,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1",
     "cross-env": "^5.2.0",
-    "eslint": "^5.3.0",
+    "eslint": "^4.19.1",
     "eslint-config-airbnb": "^17.0.0",
     "eslint-config-standard": "^11.0.0",
     "eslint-loader": "^2.1.0",
@@ -60,14 +61,22 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
+    "ejs-compiled-loader": "^1.1.0",
     "express": "^4.16.3",
+    "express-session": "^1.15.6",
     "mobx": "^5.0.3",
     "mobx-react": "^5.2.3",
     "prop-types": "^15.6.2",
+    "query-string": "^6.1.0",
     "react": "^16.4.2",
+    "react-async-bootstrapper": "^2.1.1",
     "react-dom": "^16.4.2",
+    "react-helmet": "^5.2.0",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
+    "serialize-javascript": "^1.5.0",
     "serve-favicon": "^2.5.0",
     "styled-components": "^3.4.1"
   }

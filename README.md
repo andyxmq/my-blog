@@ -10,15 +10,15 @@ react  mobx
 > 如何区分项目类型
 
     分两大类：单页应用、多页应用（传统网站）
-
+    
     1.多页应用的特征:
-
+    
         所有内容都由服务端用模板生成（java .net php）
         每次页面跳转都需要经过服务端
         js更多是做做动画
-
+    
         常用类库：jQuery、mootools、YUI、
-
+    
         架构工具：无特定前端框架，跟后端配合
             grunt、glup(后来)
         模块化工具： 无特定的框架
@@ -28,17 +28,17 @@ react  mobx
 
 
     2.单页应用特征：
-
+    
         所有的内容都是在前端生成
         JS承担更多的业务逻辑，后端只提供数据API
         页面路由跳转不需要经过后端
-
+    
         常用类库：React Vue Angular Backbone.js
-
+    
         架构工具：npm bower jspm
-
+    
         模块化工具：webpack rollup browserify
-
+    
         静态文件：
             可以直接在js代码中进行引用，并且交由模块化工具转化成线上可用的静态资源，并且可以定制转化过程适应不同的
             需求场景
@@ -46,9 +46,9 @@ react  mobx
 > 其他考虑因素
 
     浏览器兼容性（必须在指定浏览器访问）
-
+    
     toB(浏览器兼容要求比较低、交互要求比较低、功能复杂度高，选择一些框架)还是toC(性能要求高，功能复杂度低)
-
+    
     移动端还是PC端
 
 ## WebApp架构简介
@@ -56,34 +56,34 @@ react  mobx
 > 工程架构
 
     1.解放生成力(聚焦业务代码，解决重复的工作(文件复杂、刷新浏览器、重启服务))
-
+    
         源代码预处理
         自动打包、自动更新页面显示
         自动处理图片依赖、保证开发环境和正式环境的统一
-
+    
     2.围绕解决方案搭建环境
-
+    
         不同的前端框架需要不同的运行架构
         预期可能出现的问题并规避
-
+    
     3.保证项目质量（排错、提高效率）
-
+    
         code lint
         不同环境排除差异（如break lines）
         EditorConfig 统一编辑器
         git commit 预处理(husky)
     4.定制（对使用工具的方法了如指掌最终结果自己写出一个框架）
-
+    
     目标：项目稳定跑起来、提高开发效率
 
 > 项目架构
 
     目标：网页如何去运行、代码如何去分成、更好的实现功能、为将来扩展留空间
-
+    
     技术选型：选择合适的框架  (React Mobx)
-
+    
     数据解决方案：flux
-
+    
     整体的代码风格:
 
 > web开发常用的网络优化
@@ -97,11 +97,11 @@ react  mobx
 > 工程架构的核心：webpack配置（模块打包器）通过loader打包所有资源（js、css、图片、字体）
 
     1.创建npm项目: npm init
-
+    
     2.安装webpack react
-
+    
     3.新建build文件夹：webpack配置文件 脚本文件等  client: 前端应用文件
-
+    
         在build中创建webpack.config.js：
 ```js
     const path = require('path') // 解决不同环境之间路径引用问题
@@ -121,7 +121,7 @@ react  mobx
 
 
     4.webpack loader的基础应用
-
+    
         安装jsx loader: npm i babel-loader babel-core -D
 ```js
     //  修改webpack配置
@@ -154,14 +154,14 @@ react  mobx
 ```
 
     5. 服务端渲染
-
+    
         1).存在的原因：由于单页应用存在的问题（SEO不友好、首次请求等待时间较长，体验不友好）
         2).使用react-dom/server进行服务端渲染:
-
+    
             a：创建server-entry.js 目的export 服务端要渲染内容
-
+    
             b：创建服务端webpack配置
-
+    
             c：修改package中的script 安装rimraf包
 
 ```js
@@ -195,7 +195,7 @@ react  mobx
 > 项目开发时的常用配置
 
     1. 常用配置
-
+    
         webpack dev server：修改webpack配置文件，判断当前是否为开发模式
 ```js
         const isDev = process.env.NODE_ENV === 'development'
@@ -225,7 +225,7 @@ react  mobx
 
 
         Hot module replacement(无刷新),配置如下：
-
+    
         1)：npm install --save-dev react-hot-loader,修改.babelrc
 ```js
         "plugins": [
@@ -288,9 +288,9 @@ react  mobx
 ```
 
     2. 新建utils dev-static
-
+    
     1)：安装axios，获取模板文件  npm i axios -S
-
+    
     2): 获取template.html
 ```js
     const getTemplate = () => {
@@ -347,12 +347,12 @@ react  mobx
     1.作用：
       规范代码有利于团队协作
       纯手工费时费力不能保证其准确性
-
+    
     2.git commit时，使用git hook调用eslint进行代码验证
 
 
     3.editorConfig：统一文本编辑器之间的一些规范,EditorConfig每一个编辑器的插件
-
+    
     4.开始使用：
         安装eslint : npm i eslint -D, 新建.babelrc
         整个项目遵循根目录下的.eslintrc
@@ -437,7 +437,7 @@ react  mobx
   1. React中的路由
 
     React-router是以一个非常好用的路由控制，能让我们想书写JSX组件一样控制路由调转
-
+    
     安装react-router(react-router-dom/react-router-native) -S, 因此react-router-dom
 
 ```js
@@ -503,3 +503,106 @@ react  mobx
 
 ```
   安装 mobx mobx-react -S ; 安装prop-types -S
+
+
+
+> Cnode API代理实现  [API](https://cnodejs.org/api)
+
+
+
+1. 安装相关工具：body-parser express-session query-string -S
+2. 修改server.js
+
+
+
+> 服务端渲染优化
+
+1. 路由调转
+2. store数据同步
+
+```
+// server-entry.js StaticRouter用于服务端渲染
+import { StaticRouter } from 'react-router-dom'; 
+
+// Provider 用于传入stores
+// useStaticRendering 解决server side渲染leak memory 让mobx在服务端渲染的时候不会重复数据变换
+import { Provider, useStaticRendering } from 'mobx-react';
+useStaticRendering(true);
+
+import { createStoreMap } from './store/store';
+export { createStoreMap };
+// 修改app-state.js
+
+import {
+  observable,
+  computed,
+  action,
+} from 'mobx';
+
+export default class Appstate {
+  @observable count = 0;
+
+  @observable name = 'Jokcy';
+
+  @computed get msg() {
+    return `${this.name} say count is ${this.count}`;
+  }
+
+  @action add() {
+    this.count += 1;
+  }
+
+  @action changeName(name) {
+    this.name = name;
+  }
+}
+
+// const appState = new Appstate();
+
+// export default appState;
+
+/* 修改app.js */
+import AppState from './store/app-state';
+<Provider appState={new AppState()}> // 通过new AppState() 创建store对象
+
+/* 新增store.js */
+import AppStateClass from './app-state';
+export const AppState = AppStateClass;
+export default {
+  AppState,
+};
+// 创建
+export const createStoreMap = () => ({
+  appState: new AppState(),
+});
+
+// 修改dev-static
+
+let serverBundle, createStoreMap // 最终要
+ createStoreMap = m.exports.createStoreMap
+```
+
+3. 处理异步调用 安装：react-async-bootstrapper -S
+
+   ```js
+   // 修改dev-static.js 
+   
+   bootstrapper(app).then(() => {
+       const content = ReactDomServer.renderToString(app)
+       if (routerContext.url) {
+           console.log(routerContext, 'routerContext')
+           res.writeHead(302, {
+               Location: routerContext.url
+           })
+           res.end()
+           return
+       }
+       res.send(template.replace('<!--app-->', content))
+   })
+   ```
+
+   
+
+4. 解决html title: npm i react-helmet -S
+
+## React16

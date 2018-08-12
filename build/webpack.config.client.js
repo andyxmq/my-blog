@@ -15,6 +15,10 @@ const config = webpackMerge(baseConfig, {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, '../client/template.html')
+    }),
+    new HtmlWebpackPlugin({
+      template: '!!ejs-compiled-loader!' + path.join(__dirname, '../client/server.template.ejs'),
+      filename: 'server.ejs'
     })
   ]
 })
@@ -37,6 +41,9 @@ if (isDev) {
     publicPath: '/public', // 解决静态文件无法访问，与output中publicPath 保持一致
     historyApiFallback: { // 解决错误路径
       index: '/public/index.html'
+    },
+    proxy: {
+      '/api': 'http://localhost:4444'
     }
   }
   config.plugins.push(new webpack.HotModuleReplacementPlugin())
