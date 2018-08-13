@@ -18,7 +18,22 @@ const theme = createMuiTheme({
 });
 
 const initialState = window.__INITIAL_STATE__ || {}; // eslint-disable-line
+const createApp = (TheApp) => {
+  class Main extends React.Component {
+    // Remove the server-side injected CSS.
+    componentDidMount() {
+      const jssStyles = document.getElementById('jss-server-side');
+      if (jssStyles && jssStyles.parentNode) {
+        jssStyles.parentNode.removeChild(jssStyles);
+      }
+    }
 
+    render() {
+      return <TheApp />;
+    }
+  }
+  return Main;
+};
 const root = document.getElementById('root');
 const render = (Component) => {
   ReactDOM.hydrate(
@@ -34,11 +49,11 @@ const render = (Component) => {
     root,
   );
 };
-render(App);
+render(createApp(App));
 if (module.hot) {
   module.hot.accept('./views/App1.jsx', () => {
     const NextApp = require('./views/App1.jsx').default; // eslint-disable-line
     // in all other cases - re-require App manually
-    render(NextApp);
+    render(createApp(NextApp));
   });
 }
