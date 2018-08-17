@@ -9,16 +9,9 @@ export default class App extends React.Component {
     this.state = {};
   }
 
-  componentDidMount() {
-    const jssStyles = document.getElementById('jss-server-side');
-    if (jssStyles && jssStyles.parentNode) {
-      jssStyles.parentNode.removeChild(jssStyles);
-    }
-  }
-
   render() {
     return [
-      <AppBar />,
+      <AppBar key="1" />,
       <Routes key="2" />,
     ];
   }

@@ -34,7 +34,7 @@ if (isDev) {
   config.devServer = {
     host: '0.0.0.0', //  可以使用任何方式访问IP localhost 127.0.0.1
     port: '8888',
-    contentBase: path.join(__dirname, '../dist'), //  webpack处理的静态文件
+    // contentBase: path.join(__dirname, '../dist'), //  webpack处理的静态文件
     hot: true, // 启动hot module replacement
     overlay: { // 出现错误在网页显示黑色的错误
       errors: true

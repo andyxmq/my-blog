@@ -4,7 +4,7 @@ import { Provider, useStaticRendering } from 'mobx-react';
 import { JssProvider } from 'react-jss';
 import {
   MuiThemeProvider,
-} from 'material-ui/styles';
+} from '@material-ui/core/styles';
 import App from './views/App1.jsx';
 import { createStoreMap } from './store/store';
 // 让mobx在服务端渲染的时候不会重复数据变换

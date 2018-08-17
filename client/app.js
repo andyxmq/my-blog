@@ -3,12 +3,13 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'mobx-react';
 import { AppContainer } from 'react-hot-loader';
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
-import { lightBlue, pink } from 'material-ui/colors';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { lightBlue, pink } from '@material-ui/core/colors';
 import App from './views/App1';
 
 import AppState from './store/app-state';
 
+// 创建主题
 const theme = createMuiTheme({
   palette: {
     primary: pink,
