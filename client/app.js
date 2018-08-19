@@ -7,7 +7,7 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { lightBlue, pink } from '@material-ui/core/colors';
 import App from './views/App1';
 
-import AppState from './store/app-state';
+import { AppState, TopicStore } from './store/store';
 
 // 创建主题
 const theme = createMuiTheme({
@@ -35,11 +35,14 @@ const createApp = (TheApp) => {
   }
   return Main;
 };
+
+const appState = new AppState(initialState.appState);
+const topicStore = new TopicStore(initialState.topicStore);
 const root = document.getElementById('root');
 const render = (Component) => {
   ReactDOM.hydrate(
     <AppContainer>
-      <Provider appState={new AppState()}>
+      <Provider appState={appState} topicStore={topicStore}>
         <BrowserRouter>
           <MuiThemeProvider theme={theme}>
             <Component />
