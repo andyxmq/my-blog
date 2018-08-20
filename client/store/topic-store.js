@@ -33,12 +33,13 @@ class TopicStore {
   }
 
   // 获取topics数据
-  @action fecthTopics() {
+  @action fecthTopics(tab) {
     return new Promise((resolve, reject) => {
       this.syncing = true;
       this.topics = [];
       get('topics', {
         mdrender: false,
+        tab,
       }).then((resp) => {
         if (resp.success) {
           resp.data.forEach((topic) => {
