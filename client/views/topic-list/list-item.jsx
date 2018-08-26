@@ -5,6 +5,7 @@ import Avatar from '@material-ui/core/Avatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import cs from 'classnames';
+import dateFormat from 'dateformat';
 import { withStyles } from '@material-ui/core/styles';
 import { topicPrimaryStyle, topicSecondaryStyle } from './styles';
 import { tabs } from '../../utils/variable-define';
@@ -36,7 +37,7 @@ const Secondary = ({ classes, topic }) => (
     </span>
     <span>
       创建时间：
-      {topic.create_at}
+      {dateFormat(topic.create_at, 'yyyy-mm-dd HH:ss:mm')}
     </span>
   </span>
 );

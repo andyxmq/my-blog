@@ -26,7 +26,6 @@ export default class TopicList extends React.Component {
   constructor() {
     super();
     this.changeTab = this.changeTab.bind(this);
-    this.listItemClick = this.listItemClick.bind(this);
   }
 
   componentDidMount() {
@@ -62,13 +61,9 @@ export default class TopicList extends React.Component {
     });
   }
 
-  /* eslint-disable */
-  listItemClick() {
-    // do some
-
+  listItemClick(topic) {
+    this.context.router.history.push(`/detail/${topic.id}`);
   }
-
-  /* eslint-enable */
 
   render() {
     const { topicStore } = this.props;
@@ -88,7 +83,7 @@ export default class TopicList extends React.Component {
         </Tabs>
         <List>
           {
-            topicList.map(topic => <TopicListItem key={topic.id} onClick={this.listItemClick} topic={topic} />)
+            topicList.map(topic => <TopicListItem key={topic.id} onClick={() => this.listItemClick(topic)} topic={topic} />)
           }
         </List>
         {
