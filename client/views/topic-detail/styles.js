@@ -36,6 +36,18 @@ export const topicDetailStyle = {
     textAlign: 'center',
     padding: '20px 0',
   },
+  replyEditor: {
+    position: 'relative',
+    padding: 24,
+    borderBottom: '1px solid @dfdfdf',
+    '& .CodeMirror': {
+      height: 150,
+      minHeight: 'auto',
+      '& .CodeMirror-scroll': {
+        minHeight: 'auto',
+      },
+    },
+  },
 };
 
 export const replyStyle = {

@@ -5,9 +5,8 @@ const router = express.Router()
 const baseUrl = 'https://cnodejs.org/api/v1'
 
 router.post('/login', function (req, res, next) {
-
   axios.post(`${baseUrl}/accesstoken`, {
-    accesstoken: req.body.accesstoken
+    accesstoken: req.body.accessToken
   }).then(resp => {
     if (resp.status === 200 && resp.data.success) {
       req.session.user = {
