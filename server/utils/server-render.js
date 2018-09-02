@@ -1,4 +1,4 @@
-const bootstrapper = require('react-async-bootstrapper')
+const bootstrap = require('react-async-bootstrapper')
 const serialize = require('serialize-javascript')
 const ejs = require('ejs')
 const ReactDomServer = require('react-dom/server')
@@ -20,11 +20,16 @@ const getStoreState = (stores) => {
 
 module.exports = (bundle, template, req, res) => {
   return new Promise((resolve, reject) => {
+    const user = req.session.user
     const createStoreMap = bundle.createStoreMap
     const createApp = bundle.default
     const routerContext = {}
     const stores = createStoreMap()
 
+    if (user) {
+      stores.appState.user.isLogin = true
+      stores.appState.user.info = user
+    }
     const sheetsRegistry = new SheetsRegistry()
     const jss = create(preset())
     jss.options.createGenerateClassName = createGenerateClassName
@@ -37,7 +42,7 @@ module.exports = (bundle, template, req, res) => {
       }
     })
     const app = createApp(stores, routerContext, sheetsRegistry, jss, theme, req.url)
-    bootstrapper(app).then(() => {
+    bootstrap(app).then(() => {
       const state = getStoreState(stores)
       const content = ReactDomServer.renderToString(app)
       if (routerContext.url) {

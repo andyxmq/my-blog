@@ -2,6 +2,7 @@
 import {
   observable,
   action,
+  toJS,
 } from 'mobx';
 
 import { post, get } from '../utils/http';
@@ -20,6 +21,12 @@ export default class Appstate {
       list: [],
     },
   };
+
+  init({ user = null } = {}) {
+    if (user) {
+      this.user = user;
+    }
+  }
 
   @action login(accessToken) {
     let self = this;
@@ -77,5 +84,11 @@ export default class Appstate {
           reject(error);
         });
     });
+  }
+
+  toJson() {
+    return {
+      user: toJS(this.user),
+    };
   }
 }

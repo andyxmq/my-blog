@@ -8,7 +8,6 @@ import List from '@material-ui/core/List';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import queryString from 'query-string';
 
-import AppState from '../../store/app-state';
 import Container from '../layout/container';
 import TopicListItem from './list-item';
 import { tabs } from '../../utils/variable-define';
@@ -44,14 +43,9 @@ export default class TopicList extends React.Component {
     return tab || 'all';
   }
 
-  bootstrapper() {
-    let that = this;
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        that.props.appState.count = 3;
-        resolve(true);
-      }, 100);
-    });
+  bootstrap() {
+    const { tab } = queryString.parse(this.props.location.search);
+    return this.props.topicStore.fecthTopics(tab || 'all').then(() => true).catch(() => false);
   }
 
   changeTab(event, value) {
@@ -67,7 +61,8 @@ export default class TopicList extends React.Component {
 
   render() {
     const { topicStore } = this.props;
-    const { topics: topicList, syncing: syncingTopics } = topicStore;
+    const { topics: topicList, syncing: syncingTopics, createTopics } = topicStore;
+    const { user } = this.props.appState;
     return (
       <Container>
         <Helmet>
@@ -81,9 +76,23 @@ export default class TopicList extends React.Component {
             Object.keys(tabs).map(item => <Tab key={item} label={tabs[item]} value={item} />)
           }
         </Tabs>
+        {
+          (createTopics && createTopics.length > 0) ? (
+            <List style={{ background: '#dfdfd' }}>
+              {
+                createTopics.map((topic) => {
+                  topic = Object.assign({}, topic, {
+                    author: user.info,
+                  });
+                  return <TopicListItem key={topic.id} onClick={() => this.listItemClick(topic)} topic={topic} />;
+                })
+              }
+            </List>
+          ) : null
+        }
         <List>
           {
-            topicList.map(topic => <TopicListItem key={topic.id} onClick={() => this.listItemClick(topic)} topic={topic} />)
+            topicList && topicList.map(topic => <TopicListItem key={topic.id} onClick={() => this.listItemClick(topic)} topic={topic} />)
           }
         </List>
         {
@@ -106,7 +115,7 @@ export default class TopicList extends React.Component {
 }
 
 TopicList.wrappedComponent.propTypes = {
-  // appState: PropTypes.instanceOf(AppState).isRequired,
+  appState: PropTypes.object.isRequired,
   topicStore: PropTypes.object.isRequired,
 };
 

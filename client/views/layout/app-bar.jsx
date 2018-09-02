@@ -49,16 +49,14 @@ class MainAppBar extends React.Component {
     this.createButtonClick = this.createButtonClick.bind(this);
     this.loginButtonClick = this.loginButtonClick.bind(this);
   }
-  /*eslint-disable*/
-  onHomeIconClick() {
 
+  onHomeIconClick() {
+    this.context.router.history.push('/index');
   }
 
   createButtonClick() {
-
+    this.context.router.history.push('/topic/create');
   }
-
-  /* eslint-enable */
 
   loginButtonClick() {
     if (this.props.appState.user.isLogin) {

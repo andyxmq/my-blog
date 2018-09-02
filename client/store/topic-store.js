@@ -1,14 +1,15 @@
 import {
   observable,
-  // toJS,
+  toJS,
   computed,
   action,
   extendObservable,
 } from 'mobx';
 
-import { topicSchema } from '../utils/variable-define';
-import { get } from '../utils/http';
+import { topicSchema, replySchema } from '../utils/variable-define';
+import { get, post } from '../utils/http';
 
+const createReply = reply => Object.assign({}, replySchema, reply);
 const createTopic = topic => Object.assign({}, topicSchema, topic);
 class Topic {
   constructor(data) {
@@ -16,6 +17,29 @@ class Topic {
   }
 
   @observable syncing = false ;
+
+  @observable createReplies = [];
+
+  @action doReply(content) {
+    return new Promise((resolve, reject) => {
+      post(`topic/${this.id}/replies`, {
+        needAccessToken: true,
+      }, { content })
+        .then((resp) => {
+          if (resp.success) {
+            this.createReplies.push(createReply({
+              id: resp.reply_id,
+              content,
+              create_at: Date.now(),
+            }));
+            resolve();
+          } else {
+            reject(resp);
+          }
+        })
+        .catch(reject);
+    });
+  }
 }
 
 class TopicStore {
@@ -25,9 +49,16 @@ class TopicStore {
 
   @observable syncing;
 
-  constructor({ syncing = false, topics = [], details = [] } = {}) {
+  @observable createTopics = [];
+
+  @observable tab = undefined;
+
+  constructor({
+    syncing = false, topics = [], details = [], tab = null,
+  } = {}) {
     this.syncing = syncing;
     this.details = details;
+    this.tab = tab;
     this.topics = topics.map(topic => new Topic(createTopic(topic)));
   }
 
@@ -38,25 +69,28 @@ class TopicStore {
   // 获取topics数据
   @action fecthTopics(tab) {
     return new Promise((resolve, reject) => {
-      this.syncing = true;
-      this.topics = [];
-      get('topics', {
-        mdrender: false,
-        tab,
-      }).then((resp) => {
-        if (resp.success) {
-          resp.data.forEach((topic) => {
-            this.addTopic(topic);
-          });
-          resolve();
-        } else {
-          reject();
-        }
-        this.syncing = false;
-      }).catch((err) => {
-        reject(err);
-        this.syncing = false;
-      });
+      if (tab === this.tab && this.topics.length > 0) {
+        resolve();
+      } else {
+        this.tab = tab;
+        this.syncing = true;
+        this.topics = [];
+        get('topics', {
+          mdrender: false,
+          tab,
+        }).then((resp) => {
+          if (resp.success) {
+            this.topics = resp.data.map(topic => new Topic(createTopic(topic)));
+            resolve();
+          } else {
+            reject();
+          }
+          this.syncing = false;
+        }).catch((err) => {
+          reject(err);
+          this.syncing = false;
+        });
+      }
     });
   }
 
@@ -85,6 +119,40 @@ class TopicStore {
         }).catch(reject);
       }
     });
+  }
+
+  @action createTopic({ title, tab, content }) {
+    return new Promise((resolve, reject) => {
+      post('topics', {
+        needAccessToken: true,
+      }, {
+        title, tab, content,
+      }).then((resp) => {
+        if (resp.success) {
+          const topic = {
+            title,
+            tab,
+            content,
+            id: resp.data.topic_id,
+            create_at: Date.now(),
+          };
+          this.createTopics.push(new Topic(createTopic(topic)));
+          resolve();
+        } else {
+          reject();
+        }
+      }).catch(reject);
+    });
+  }
+
+  toJson() {
+    return {
+      page: this.page,
+      topics: toJS(this.topics),
+      details: toJS(this.details),
+      syncing: this.syncing,
+      tab: this.tab,
+    };
   }
 }
 
