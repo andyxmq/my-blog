@@ -51,7 +51,7 @@ class TopicStore {
 
   @observable createTopics = [];
 
-  @observable tab = undefined;
+  @observable tab;
 
   constructor({
     syncing = false, topics = [], details = [], tab = null,
@@ -147,7 +147,6 @@ class TopicStore {
 
   toJson() {
     return {
-      page: this.page,
       topics: toJS(this.topics),
       details: toJS(this.details),
       syncing: this.syncing,
