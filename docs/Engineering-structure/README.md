@@ -10,5 +10,10 @@
 
     1. 两大分类：单页应用(所有内容前端生成)、多页应用（传统网站）。
     2. 多页应用的特征:
-       a: 所有内容都由服务端用模板(jsp等)生成；
+       a: 所有内容都由服务端用模板(jsp等)生成;
+       b: 每次页面跳转都需要经过服务端;
+       c: js作用更多是做一些动画效果等;
+       
+       常用的类库: jQuery、mootools(https://mootools.net/)、YUI,都是对DOM层面进行封装;
+       架构工具：前端无特定工具，跟后端配合；直至后来有grunt(https://gruntjs.com/getting-started)、glup
 
