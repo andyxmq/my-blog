@@ -13,7 +13,30 @@
        a: 所有内容都由服务端用模板(jsp等)生成;
        b: 每次页面跳转都需要经过服务端;
        c: js作用更多是做一些动画效果等;
-       
-       常用的类库: jQuery、mootools(https://mootools.net/)、YUI,都是对DOM层面进行封装;
+    
+       常用类库: jQuery、mootools(https://mootools.net/)、YUI,都是对DOM层面进行封装;
        架构工具：前端无特定工具，跟后端配合；直至后来有grunt(https://gruntjs.com/getting-started)、glup
+       模块化工具：无，后来解决重复引用问题的两个工具：seajs、requirejs
+       静态文件处理：使用gulp或grunt等工具编译在html中，自由度低，操作复杂；或者不处理，交给后端，让后端通过
+       服务去处理
+    
+    3. 单页应用的特征:
+       a: 所有类容都在前端生成;
+       b: JS承担更多的业务逻辑，后端只提供API;
+       c: 页面路由调转不需要经过后端;
+    
+       常用类库: React(jsx语法) Vue(.vue) Angular(ts) (Backbone(前端mvc，出现在Angular之前)),三个框架都
+       在dom的上层进行封装，隔离DOM，因此就可以支持服务端渲染；
+       架构工具：npm、bower、jspm(面向未来)
+       模块化工具：webpack、rollup(效率高Tree-Shaking)、browserify(不太适合单页应用)
+       静态文件处理：在js中直接引用，模块化工具转化成可用的静态资源
 
+
+
+> 其它考虑因素
+
+    1. 浏览器兼容性（必须在指定浏览器访问）
+    2. toB(浏览器兼容要求比较低、交互要求比较低、功能复杂度高，选择一些框架)还是toC(性能要求高，功能复杂度
+    低)
+    3. 移动端还是PC端(分辨率、网速等因素)
+​
